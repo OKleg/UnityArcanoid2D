@@ -12,8 +12,9 @@ public class FastBonusScript : BonusScript {
 
   public override void BonusActivate() {
     var balls = GameObject.FindGameObjectsWithTag("Ball");
+    GetComponent<SpriteRenderer>().color = bonusColor;
     foreach (var ball in balls) {
-      ball.GetComponent<SpriteRenderer>().color = bonusColor;
+      //ball.GetComponent<SpriteRenderer>().color = bonusColor;
       rb = ball.GetComponent<Rigidbody2D>();
       rb.velocity = new Vector2(rb.velocity.x*1.1f,rb.velocity.y*1.1f);
     }

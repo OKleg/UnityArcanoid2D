@@ -14,15 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetOnStart: 1
   level: 1
-  balls: 4
-  points: 140
-  pointsToBall: 140
+  balls: 6
+  points: 0
+  pointsToBall: 0
   music: 0
   sound: 0
-  pointsBonusCount: 1
-  fastBonusCount: 1
-  slowBonusCount: 1
-  ballBonusCount: 1
-  addTwoBonusCount: 1
+  pointsBonusCount: 2
+  fastBonusCount: 3
+  slowBonusCount: 4
+  ballBonusCount: 3
+  addTwoBonusCount: 2
   addTenBonusCount: 1
-  bonusPrefab: {fileID: 0}

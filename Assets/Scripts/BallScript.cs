@@ -5,7 +5,7 @@ public class BallScript : MonoBehaviour {
 
     public Vector2 ballInitialForce;
 
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     GameObject playerObj;
 
     float deltaX;

@@ -60,15 +60,16 @@ public class PlayerScript : MonoBehaviour
             } 
     }
     void CreateBalls() {
-        int count = 2;
+        int countBallsInGame = 2;
         if (gameData.balls == 1)
-            count = 1; 
-        for (int i = 0; i < count; i++) {
+            countBallsInGame = 1; 
+        for (int i = 0; i < countBallsInGame; i++) {
             var obj = Instantiate(ballPrefab);
             var ball = obj.GetComponent<BallScript>();
             ball.ballInitialForce += new Vector2(10 * i, 0);
             ball.ballInitialForce *= 1 + level * ballVelocityMult;
         }
+
     }
 
     void SetBackground()
