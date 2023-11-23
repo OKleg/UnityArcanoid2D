@@ -5,15 +5,15 @@ using UnityEngine.UI; // using TMPro;
 public class BlockScript : MonoBehaviour
 {
     public GameObject textObject;
-    Text textComponent; 
+    protected Text textComponent; 
         
     public int hitsToDestroy;
     public int points;
 
-    PlayerScript playerScript;
+    protected PlayerScript playerScript;
 
 
-    void Start() {
+    protected virtual void Start() {
         if (textObject != null) {
             textComponent = textObject.GetComponent<Text>();
             textComponent.text = hitsToDestroy.ToString();
@@ -21,7 +21,7 @@ public class BlockScript : MonoBehaviour
         playerScript = GameObject.FindGameObjectWithTag("Player")
             .GetComponent<PlayerScript>(); 
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         {
             hitsToDestroy--;

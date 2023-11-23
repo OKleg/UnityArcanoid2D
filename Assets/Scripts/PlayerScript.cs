@@ -22,6 +22,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject ballPrefab;
     public GameObject bonusPrefab;
 
+    public GameObject blueShiftPrefab;
 
     static Collider2D[] colliders = new Collider2D[50];
     static ContactFilter2D contactFilter = new ContactFilter2D();
@@ -52,9 +53,23 @@ public class PlayerScript : MonoBehaviour
                 new Vector3((Random.value * 2 - 1) * xMax,
                 Random.value * yMax, 0),
                 Quaternion.identity);
+                if (obj.name == "BlueShiftBlock(Clone)")
+                {
+                    var bsb = obj.GetComponent<BlueShiftBlockScript>();
+                    {
+                        if (obj.GetComponent<Collider2D>()
+                     .OverlapCollider(contactFilter.NoFilter(), colliders) == 0)
+                        {
+                            var (x1, y1, x2, y2) = (Random.value, Random.value, Random.value, Random.value);
+                            bsb.p1 = new Vector2(-x1 * xMax, (y1 - 0.5f) * yMax);
+                            bsb.p2 = new Vector2(x2 * xMax, (y2 - 0.5f) * yMax);
+                            break;
+                        }
+                    }
+                }
+                else
                 if (obj.GetComponent<Collider2D>()
                     .OverlapCollider(contactFilter.NoFilter(), colliders) == 0)
-                    
                     break;
                 Destroy(obj);
             } 
@@ -87,6 +102,7 @@ public class PlayerScript : MonoBehaviour
         CreateBlocks(redPrefab, xMax, yMax, 1 + level, 10);
         CreateBlocks(greenPrefab, xMax, yMax, 1 + level, 12);
         CreateBlocks(yellowPrefab, xMax, yMax, 2 + level, 15);
+        CreateBlocks(blueShiftPrefab, xMax, yMax, level, 3);
         CreateBalls();
     } 
     void Start() { 
