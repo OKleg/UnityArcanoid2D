@@ -131,12 +131,14 @@ public class UIScript : MonoBehaviour
 
     public void OnPlayButtonClick()
     {
+        print(Time.timeScale);
         if (username !="")
             if (!gameData.isGamePlaying())
             {
                 gameData.setGamePlaying();
                 HideMenuImage();
                 ChangeUsername();
+                Time.timeScale = 1;
             }
             else
             if (Time.timeScale <= 0)
