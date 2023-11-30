@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5f2da13ce92b31488067ccc09a5042a, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
+  gamePlaying: 0
+  username: kmm
   resetOnStart: 1
-  level: 3
-  balls: 8
-  points: 970
-  pointsToBall: 370
+  level: 1
+  balls: 6
+  points: 0
+  pointsToBall: 0
   music: 0
   sound: 0
-  pointsBonusCount: 2
-  fastBonusCount: 3
-  slowBonusCount: 4
-  ballBonusCount: 3
-  addTwoBonusCount: 2
-  addTenBonusCount: 1
+  pointsBonusCount: 1
+  fastBonusCount: 1
+  slowBonusCount: 1
+  ballBonusCount: 1
+  addTwoBonusCount: 10
+  addTenBonusCount: 10

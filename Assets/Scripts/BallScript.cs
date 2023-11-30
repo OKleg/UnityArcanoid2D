@@ -23,13 +23,16 @@ public class BallScript : MonoBehaviour {
         audioSrc = Camera.main.GetComponent<AudioSource>();
     }
 
-    void Update() {
+    void Update()
+    {
         if (rb.isKinematic)
-            if (Input.GetButtonDown("Fire1")) {
+            if (Input.GetButtonDown("Fire1") && gameData.isGamePlaying())
+            {
                 rb.isKinematic = false;
                 rb.AddForce(ballInitialForce);
             }
-            else {
+            else
+            {
                 var pos = transform.position;
                 pos.x = playerObj.transform.position.x + deltaX;
                 transform.position = pos;
@@ -37,7 +40,7 @@ public class BallScript : MonoBehaviour {
         if (!rb.isKinematic && Input.GetKeyDown(KeyCode.J))
         {
             var v = rb.velocity;
-            if (Random.Range(0,2) == 0)
+            if (Random.Range(0, 2) == 0)
                 v.Set(v.x - 0.1f, v.y + 0.1f);
             else
                 v.Set(v.x + 0.1f, v.y - 0.1f);

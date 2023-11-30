@@ -37,8 +37,9 @@ public class BonusScript : MonoBehaviour {
     {
         // if (gameData.sound)
         //     audioSrc.PlayOneShot(loseSound,5);
+        if (other.name == "Player")
+            BonusActivate();
         Destroy(gameObject);
-        BonusActivate();
     }
 
 }

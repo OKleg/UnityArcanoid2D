@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
-
+    public float gameStartDelay = 1f;
     static bool gameStarted = false;
 
+
+    [SerializeField] private UIScript UIScript;
     public GameDataScript gameData;
 
     const int maxLevel = 30;
@@ -33,6 +36,7 @@ public class PlayerScript : MonoBehaviour
     int requiredPointsToBall
         { get { return 400 + (level - 1) * 20; } }
 
+    
     void SetMusic()
     {
         if (gameData.music)
@@ -41,7 +45,8 @@ public class PlayerScript : MonoBehaviour
             audioSrc.Stop();
     }
 
-    void CreateBlocks( GameObject prefab, float xMax, float yMax,
+
+        void CreateBlocks( GameObject prefab, float xMax, float yMax,
                     int count, int maxCount )
     {
         if (count > maxCount)
@@ -105,10 +110,22 @@ public class PlayerScript : MonoBehaviour
         CreateBlocks(blueShiftPrefab, xMax, yMax, level, 3);
         CreateBalls();
     } 
-    void Start() { 
-        
+
+    void Start() {
+        print("Start");
+        UIScript.setName();
+        if (gameData.isGamePlaying())
+        {
+            UIScript.HideMenuImage();
+        }
+        else
+        {
+            UIScript.setName();
+            //gameData.username = username;
+            UIScript.ShowMenuImage();
+        }
         audioSrc = Camera.main.GetComponent<AudioSource>();
-        Cursor.visible = false;
+        
         if (!gameStarted)
         {
             gameStarted = true;
@@ -116,12 +133,14 @@ public class PlayerScript : MonoBehaviour
                 gameData.Load();
         }
         level = gameData.level;
+        UIScript.SetTop();
         SetMusic();
         StartLevel();
     }
 
     // Update is called once per frame
     void Update()  {
+       
         if (Time.timeScale > 0)
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -129,32 +148,49 @@ public class PlayerScript : MonoBehaviour
             pos.x = mousePos.x;
             transform.position = pos;
         }
-        if (Input.GetKeyDown(KeyCode.M))
+        if (gameData.isGamePlaying())
         {
-            gameData.music = !gameData.music;
-            SetMusic();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-            gameData.sound = !gameData.sound;
-        if (Input.GetButtonDown("Pause"))
-        {
-            if (Time.timeScale > 0)
-                Time.timeScale = 0;
-             else
-                Time.timeScale = 1;
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            gameData.Reset();
-            SceneManager.LoadScene("MainScene");
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                gameData.music = !gameData.music;
+                SetMusic();
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+                gameData.sound = !gameData.sound;
+            if (Input.GetButtonDown("Pause"))
+            {
+                if (Time.timeScale > 0)
+                {
+                    //GameObject.FindGameObjectsWithTag("Pause")[0].GetComponent<Text>().text = "Pause";
+                    UIScript.pauseText.text = "Pause";
+                    Time.timeScale = 0;
+                    UIScript.TopSetup();
+                    UIScript.ShowMenuImage();
+                }
+                else
+                {
+                    UIScript.pauseText.text = "";
+                    //GameObject.FindGameObjectsWithTag("Pause")[0].GetComponent<Text>().text = "";
+                    Time.timeScale = 1;
+                    UIScript.HideMenuImage();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                gameData.Reset();
+                SceneManager.LoadScene("MainScene");
+            }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            UIScript.EndGame();
             Application.Quit();
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-        #endif
- } 
+#endif
+        }
+        
     }
 
     IEnumerator BallDestroyedCoroutine()
@@ -165,7 +201,7 @@ public class PlayerScript : MonoBehaviour
                 CreateBalls();
             else
             {
-                gameData.Reset();
+                UIScript.EndGame();
                 SceneManager.LoadScene("MainScene");
             }
 
@@ -240,6 +276,9 @@ public class PlayerScript : MonoBehaviour
                 " <color=white>Esc</color>-exit</size></color>",
                 OnOff(Time.timeScale > 0), OnOff(!gameData.music),
                 OnOff(!gameData.sound)), style);
+
+       // username = GUI.TextArea(new Rect(-12, 166, 400, 100), username, 10);
+        
     }
 
     void OnApplicationQuit()
