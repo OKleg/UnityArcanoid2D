@@ -91,6 +91,7 @@ public class GameDataScript : ScriptableObject
 
     public void Reset()
     {
+        gamePlaying = false;
         username = "";
         level = 1;
         balls = 6;

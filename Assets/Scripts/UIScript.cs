@@ -161,8 +161,11 @@ public class UIScript : MonoBehaviour
     {
         if (username != "" &&  (gameData.isGamePlaying()))
         {
-            EndGame();
+
+            gameData.Reset();
             SceneManager.LoadScene("MainScene");
+            /* EndGame();
+             SceneManager.LoadScene("MainScene");*/
         }
     }
 
